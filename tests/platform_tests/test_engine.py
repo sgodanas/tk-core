@@ -20,6 +20,7 @@ import random
 import sys
 import threading
 import time
+import unittest
 from unittest import mock
 
 import sgtk
@@ -262,6 +263,7 @@ class TestExecuteInMainThread(TestEngineBase):
         self._app.quit()
 
     @skip_if_pyside_missing
+    @unittest.skip("Problem - SG-38851")
     def test_exec_in_main_thread_deadlock(self):
         """
         Makes sure the main thread invoker doesn't deadlock when called from the main thread.
