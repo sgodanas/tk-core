@@ -222,7 +222,13 @@ class TestExecuteInMainThread(TestEngineBase):
 
         tank.platform.start_engine("test_engine", self.tk, self.context)
 
-    @unittest.skip("Problem - SG-38851")
+    @unittest.skipIf(
+        (
+            (sys.version_info.major, sys.version_info.minor) == (3, 11)
+            and sys.platform.startswith("linux")
+        ),
+        "Problem - SG-38851",
+    )
     def test_exec_in_main_thread(self):
         """
         Checks that execute in main thread actually executes in the main thread.
@@ -264,7 +270,6 @@ class TestExecuteInMainThread(TestEngineBase):
         self._app.quit()
 
     @skip_if_pyside_missing
-    @unittest.skip("Problem - SG-38851")
     def test_exec_in_main_thread_deadlock(self):
         """
         Makes sure the main thread invoker doesn't deadlock when called from the main thread.
